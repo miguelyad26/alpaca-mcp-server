@@ -1,0 +1,37 @@
+# Smithery configuration file: https://smithery.ai/docs/config#smitheryyaml
+
+startCommand:
+  type: stdio
+  configSchema:
+    # JSON Schema defining the configuration options for the MCP.
+    type: object
+    required:
+      - apiKeyId
+      - apiSecretKey
+    properties:
+      apiKeyId:
+        type: string
+        description: Your Alpaca API Key ID
+      apiSecretKey:
+        type: string
+        description: Your Alpaca API Secret Key
+      githubReadmeUrl:
+        type: string
+        default: https://raw.githubusercontent.com/miguelyad26/alpaca-py/master/README.md
+        description: Optional URL to fetch the README from GitHub if local README.md fails
+  commandFunction:
+    # A JS function that produces the CLI command based on the given config to start the MCP on stdio.
+    |-
+    (config) => ({
+      command: 'python',
+      args: ['alpaca_mcp_server.py'],
+      env: {
+        API_KEY_ID: config.apiKeyId,
+        API_SECRET_KEY: config.apiSecretKey,
+        GITHUB_README_URL: config.githubReadmeUrl
+      }
+    })
+  exampleConfig:
+    apiKeyId: your_alpaca_api_key
+    apiSecretKey: your_alpaca_secret_key
+    githubReadmeUrl: https://raw.githubusercontent.com/miguelyad26/alpaca-py/master/README.md
