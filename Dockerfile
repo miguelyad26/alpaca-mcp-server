@@ -1,10 +1,16 @@
-FROM python:3.9-slim
+FROM python:3.10-slim
 
 WORKDIR /app
-COPY . /app
 
-RUN pip install alpaca-py httpx
+# Copy and install dependencies
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
 
-RUN chmod +x alpaca_mcp_server.py
+# Copy the rest of your code
+COPY . .
 
+# Expose the port if needed
+EXPOSE 8000
+
+# Start the MCP server
 CMD ["python", "alpaca_mcp_server.py"]
