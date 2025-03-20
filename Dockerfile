@@ -5,6 +5,6 @@ COPY . /app
 
 RUN pip install alpaca-py httpx
 
-RUN chmod +x mcp_alpaca.py
+RUN chmod +x alpaca-mcp-server.py
 
-CMD ["python", "mcp_alpaca.py"]
+CMD ["python", "alpaca-mcp-server.py"]
