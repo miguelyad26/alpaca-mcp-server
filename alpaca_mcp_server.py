@@ -24,6 +24,39 @@ if not API_KEY or not API_SECRET:
 trading_client = TradingClient(API_KEY, API_SECRET, paper=True)
 stock_client = StockHistoricalDataClient(API_KEY, API_SECRET)
 
+# Function to get alpaca documentation
+def load_alpaca_docs() -> Dict[str, Any]:
+    """
+    Loads the alpaca‑py documentation.
+    
+    - If a local README.md file exists, it will be used.
+    - Otherwise, it fetches the documentation from GitHub.
+    """
+    docs_file = "README.md"
+    if os.path.exists(docs_file):
+        try:
+            with open(docs_file, "r", encoding="utf-8") as f:
+                content = f.read()
+            return {"documentation": content}
+        except Exception as e:
+            return {"error": f"Error reading {docs_file}: {str(e)}"}
+    else:
+        # Fallback: fetch from GitHub using the updated default URL
+        github_url = os.getenv("GITHUB_README_URL", "https://raw.githubusercontent.com/miguelyad26/alpaca-py/master/README.md")
+        try:
+            import httpx
+            response = httpx.get(github_url, timeout=10.0)
+            if response.status_code == 200:
+                content = response.text
+                return {"documentation": content}
+            else:
+                return {"error": f"Failed to fetch README from GitHub. Status code: {response.status_code}"}
+        except Exception as e:
+            return {"error": f"Error fetching README from GitHub: {str(e)}"}
+
+# Initialize FastMCP server with documentation as a resource
+mcp = FastMCP("alpaca-trading", resources={"alpaca_docs": load_alpaca_docs()})
+
 # Account information tools
 @mcp.tool()
 async def get_account_info() -> str:
