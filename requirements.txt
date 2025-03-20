@@ -1,3 +1,4 @@
 mcp>=1.2.0
-alpaca-py
-python-dotenv
+alpaca-py>=0.39.0
+python-dotenv>=1.0.0
+httpx>=0.28.0
