@@ -1,0 +1,11 @@
+name: alpaca-mcp-server
+services:
+  - name: alpaca
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 8000
+    env:
+      - API_KEY_ID=your_alpaca_api_key
+      - API_SECRET_KEY=your_alpaca_secret_key
