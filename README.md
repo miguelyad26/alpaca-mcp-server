@@ -4,7 +4,7 @@ This is a Model Context Protocol (MCP) server for Alpaca, allowing LLMs like Cla
 
 ## Features
 
-- 📚 ****Alpaca Documentation - Access Alpaca SDK documentation to build
+- 📚 **Alpaca Documentation** - Access Alpaca SDK documentation to build
 - 📊 **Market Data** - Get real-time stock quotes and historical price data
 - 💵 **Account Information** - Check your balances, buying power, and status
 - 📈 **Position Management** - View current positions and their performance
